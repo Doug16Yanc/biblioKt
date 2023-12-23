@@ -9,8 +9,8 @@ class servicoBiblio {
 
 
     companion object {
-        val socios  = listOf(Socio("Dooglahs", "Boulevard of Broken Dreams", "13 Destruction",
-            787880, "", "", 4060, DescricaoSocio.BIBLIOTECÁRIO))
+        val socios  = listOf(Socio(12756, "Dooglahs", "Boulevard of Broken Dreams",
+            78788, "","4060", DescricaoSocio.BIBLIOTECÁRIO))
 
         val sc = Scanner(System.`in`)
         fun loginBiblio() {
@@ -18,8 +18,10 @@ class servicoBiblio {
             do{
                 println("Nome :")
                 var nome = sc.nextLine()
-                println("Senha : ")
-                var senha = sc.nextInt()
+
+                println("Senha de acesso:")
+                var senha = sc.nextLine()
+
 
                 val socioEncontrado = socios.find {it.nomeSocio == nome && it.senha == senha}
 
@@ -41,48 +43,49 @@ class servicoBiblio {
             println("  ******************************************************\n")
             println("          REGISTROS, CONSULTAS, ALTERAÇÕES          \n\n" +
                     "               RECURSOS HUMANOS\n\n" +
-                    "               1 - Bibliotecário\n" +
-                    "               2 - Professor\n" +
-                    "               3 - Aluno \n" +
-                    "               4 - Comunidade externa\n\n" +
+                    "               1 - Ir para funções de bibliotecário\n" +
+                    "               2 - Consultar usuários\n" +
                     "               RECURSOS FÍSICOS\n\n" +
-                    "               5 - Livros\n\n" +
+                    "               3 - Livros\n\n" +
                     "               RECURSOS SENSÍVEIS\n\n" +
-                    "               6 - Visualizar seus dados\n" +
-                    "               7 - Alterar seus dados\n\n" +
+                    "               4 - Visualizar seus dados\n" +
+                    "               5 - Alterar seus dados\n\n" +
                     "               RECURSOS DE SISTEMA\n\n" +
-                    "               8 - Retornar à página inicial\n" +
-                    "               9 - Encerrar operação.\n\n" )
+                    "               6 - Retornar à página inicial\n" +
+                    "               7 - Encerrar operação.\n\n" )
 
             var opcao = sc.nextInt()
 
             when(opcao){
                 1 -> controlaBiblio()
-                2 -> servicoProfessor.controlaProf()
-                3 -> servicoAluno.controlaAluno()
-                4 -> servicoExterno.controlaExterno()
-                5 -> servicoLivro.controlaLivro()
-                6 -> visualizaDados(socios)
-                7 -> alteraDados()
-                8 -> main()
-                9 -> System.exit(0)
+                2 -> consultaUsuarios()
+                3 -> servicoLivro.controlaLivro()
+                4 -> visualizaDados(socios)
+                5 -> alteraDados()
+                6 -> main()
+                7 -> System.exit(0)
             }
         }
         fun controlaBiblio(){
-
+            println("CARO BIBLIOTECÁRIO, ESCOLHA UMA OPÇÃO")
+            println("       1 - Regitrar um novo bibliotecário  \n" +
+                    "       2 - Consultar bibliotecário         \n" +
+                    "       3 - Listar bibliotecário            \n" +
+                    "       4 - Remover bibliotecário           \n" +
+                    "       5 - ")
         }
         fun visualizaDados(socio : Socio){
             println("***************DADOS DO SÓCIO BIBLIOTECÁRIO************\n")
             println("               > Nome : ${socio.nomeSocio}\n" +
                     "               > Endereço : ${socio.enderecoSocio}\n" +
-                    "               > Bairro : ${socio.bairroSocio}\n" +
                     "               > CEP : ${socio.cepSocio}\n" +
-                    "               > Telefone : ${socio.telefoneSocio}\n" +
                     "               > Email : ${socio.emailSocio}\n" +
-                    "               > Senha : ${socio.senha}\n" +
                     "               > Tipo de sócio : ${socio.tipoSocio}\n")
         }
         fun alteraDados(){
+
+        }
+        fun consultaUsuarios(){
 
         }
     }

@@ -24,8 +24,8 @@ fun geraInteracao(){
 
     when(opcao.lowercase(Locale.getDefault())){
         "b" -> {servicoBiblio.loginBiblio()}
-        "p" -> {servicoProfessor.loginProf()}
-        "a" -> {servicoAluno.loginAluno()}
+        "p" -> {servicoProfessor.interagePrimeiro()}
+        "a" -> {servicoAluno.interagePrimeiro()}
         "e" -> {servicoExterno.loginExterno()}
         else -> {
             println("Opção não possível.\n")
