@@ -1,5 +1,6 @@
 package services
 
+import application.geraInteracao
 import entities.Livro
 import entities.Socio
 import java.util.*
@@ -36,14 +37,19 @@ data class Emprestimo(
                 }
 
                 "t" -> {
+                    sc.nextLine()
                     println("Digite o título do livro:")
-                    var titulo = sc.nextLine()
+                    var title = sc.nextLine()
 
-                    val livroEncontrado = livros.find { it.titulo == titulo.lowercase(Locale.getDefault()) }
+                    val bookEncontrado = livros.find { it.titulo == title.replaceFirstChar {
+                        if (it.isLowerCase()) it.titlecase(
+                            Locale.getDefault()
+                        ) else it.toString()
+                    }}
 
-                    if (livroEncontrado != null) {
+                    if (bookEncontrado != null) {
                         println("Realizando solicitação de empréstimo...\n")
-                        registrarEmprestimo(livroEncontrado, socio)
+                        registrarEmprestimo(bookEncontrado, socio)
                     }
                     else{
                         println("Livro não encontrado.\n")
@@ -53,6 +59,7 @@ data class Emprestimo(
                     println("Opção não possível.\n")
                 }
             }
+            geraInteracao()
         }
         fun registrarEmprestimo(livro : Livro, socio: Socio) {
             println("************DADOS DO EMPRÉSTIMO DE LIVRO************\n\n")
@@ -64,11 +71,11 @@ data class Emprestimo(
                     "            DADOS DO LIVRO             \n\n" +
                     "           > Título : ${livro.titulo}\n" +
                     "           > ISBN : ${livro.isbn}\n" +
-                    "           > Autor : ${livro.autor}\n" +
-                    "           > Editora: ${livro.editora}\n" +
+                    "           > Autor : ${livro.autor.nomeAutor}\n" +
+                    "           > Editora: ${livro.editora.nomeEditora}\n\n" +
                     "            DADOS DA OPERAÇÃO\n\n" +
                     "           > Id da operação : ${UUID.randomUUID()}\n")
-
+            geraInteracao()
         }
         fun devolverExemplares(){
 

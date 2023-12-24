@@ -10,6 +10,9 @@ import kotlin.collections.ArrayList
 class servicoLivro {
     companion object{
         var livros : MutableList<Livro> = ArrayList()
+        init{
+            guardaLivros()
+        }
         val sc = Scanner(System.`in`)
         fun controlaLivro(){
             println("************PÁGINA DO LIVRO**************\n")

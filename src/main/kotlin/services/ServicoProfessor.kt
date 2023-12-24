@@ -13,7 +13,7 @@ class servicoProfessor {
 
         val sc = Scanner(System.`in`)
         fun interagePrimeiro(){
-            println("Já é professor cadastrado ou não?\n S/s - sim\nN/n - não\n\n")
+            println("Já é professor cadastrado ou não?\nS/s - sim\nN/n - não\n\n")
             var alternativa = sc.next()
 
             when(alternativa.lowercase(Locale.getDefault())){
@@ -56,7 +56,36 @@ class servicoProfessor {
             println("**********PÁGINA OFICIAL DO PROFESSOR**************\n")
             println("Bem-vindo(a), ${professor.nomeSocio}, caríssimo mestre:")
             println("               RECURSOS HUMANOS                \n\n")
-            println("               1 - ")
+            println("               1 - Visualizar seus dados       \n" +
+                    "               2 - Alterar seus dados          \n\n" +
+                    "               RECURSOS FÍSICOS                \n\n" +
+                    "               3 - Realizar empréstimo de livro \n" +
+                    "               4 - Renovar empréstimo de livro  \n")
+            var opcao = sc.nextInt()
+
+            when(opcao){
+                1 -> {
+                  Dados.visualizaDados(professor)
+                }
+                2 -> {
+                    alteraDados()
+                }
+                3 -> {
+                    Emprestimo.procurarLivro(servicoLivro.livros, professor)
+                }
+                4 -> {
+                    Emprestimo.renovarExemplares()
+                }
+                5 -> {
+                    Emprestimo.devolverExemplares()
+                }
+                6 -> {
+                    Emprestimo.verificarSituacao()
+                }
+                else -> {
+                    println("Opção não possível.\n")
+                }
+            }
         }
         fun cadastraProfessor(){
             var id = gerarId()
@@ -123,6 +152,12 @@ class servicoProfessor {
                     "       > Tipo de sócio : ${professor.tipoSocio}\n" +
                     "       > Id da operação : ${UUID.randomUUID()}")
             main()
+        }
+        fun visualizaDados(professor : Socio){
+
+        }
+        fun alteraDados(){
+
         }
     }
 }

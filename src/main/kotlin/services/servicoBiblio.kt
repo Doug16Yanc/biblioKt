@@ -81,7 +81,7 @@ class servicoBiblio {
                 1 -> controlaBiblio()
                 2 -> consultaUsuarios(socios)
                 3 -> servicoLivro.controlaLivro()
-                4 -> visualizaDados(socios)
+                4 -> Dados.visualizaDados(socios)
                 5 -> alteraDados()
                 6 -> main()
                 7 -> System.exit(0)
@@ -114,15 +114,6 @@ class servicoBiblio {
                 }
             }
         }
-        fun visualizaDados(socio : Socio){
-            println("***************DADOS DO SÓCIO BIBLIOTECÁRIO************\n")
-            println("               > Nome : ${socio.nomeSocio}\n" +
-                    "               > Endereço : ${socio.enderecoSocio}\n" +
-                    "               > CEP : ${socio.cepSocio}\n" +
-                    "               > Email : ${socio.emailSocio}\n" +
-                    "               > Tipo de sócio : ${socio.tipoSocio}\n")
-            interageBiblio(socio)
-        }
         fun alteraDados(){
 
         }
@@ -145,7 +136,7 @@ class servicoBiblio {
         fun cadastraBiblio(){
             var id = servicoProfessor.gerarId()
 
-            servicoProfessor.sc.nextLine()
+            sc.nextLine()
 
             println("Nome:")
             var nome = sc.nextLine()

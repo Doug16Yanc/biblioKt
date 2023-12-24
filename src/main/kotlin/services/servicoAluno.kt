@@ -66,7 +66,7 @@ class servicoAluno {
 
             when(opcao){
                 1 -> {
-                    visualizaDados(aluno)
+                    Dados.visualizaDados(aluno)
                 }
                 2 -> {
                     alteraDados()
@@ -152,15 +152,6 @@ class servicoAluno {
                     "       > Tipo de sócio : ${aluno.tipoSocio}\n" +
                     "       > Id da operação : ${UUID.randomUUID()}\n")
             main()
-        }
-        fun visualizaDados(aluno: Socio){
-            println("********VISUALIZAÇÃO DE DADOS DO ESTUDANTE***********\n")
-            println("       > Nome do estudante: ${aluno.nomeSocio}\n" +
-                    "       > Id do estudante: ${aluno.id}\n" +
-                    "       > Endereço : ${aluno.enderecoSocio}\n" +
-                    "       > Cep : ${aluno.cepSocio}\n" +
-                    "       > Email : ${aluno.emailSocio}\n" +
-                    "       > Tipo de sócio : ${aluno.tipoSocio}\n")
         }
         fun alteraDados(){
 

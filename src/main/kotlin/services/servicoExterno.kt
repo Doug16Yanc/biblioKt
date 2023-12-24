@@ -13,7 +13,7 @@ class servicoExterno {
 
         val sc = Scanner(System.`in`)
         fun interagePrimeiro(){
-            println("Já é usuário cadastrado ou não?\n S/s - sim\nN/n - não\n\n")
+            println("Já é usuário cadastrado ou não?\nS/s - sim\nN/n - não\n\n")
             var alternativa = sc.next()
 
             when(alternativa.lowercase(Locale.getDefault())){
@@ -53,10 +53,39 @@ class servicoExterno {
 
         }
         fun controlaUser(usuario : Socio){
-            println("**********PÁGINA OFICIAL DO PROFESSOR**************\n")
-            println("Bem-vindo(a), ${usuario.nomeSocio}, caríssimo e inestimado usuário:")
+            println("**********PÁGINA OFICIAL DO ALUNO**************\n")
+            println("Bem-vindo(a), ${usuario.nomeSocio}, caríssimo estudante:")
             println("               RECURSOS HUMANOS                \n\n")
-            println("               1 - ")
+            println("               1 - Visualizar seus dados       \n" +
+                    "               2 - Alterar seus dados          \n\n" +
+                    "               RECURSOS FÍSICOS                \n\n" +
+                    "               3 - Realizar empréstimo de livro \n" +
+                    "               4 - Renovar empréstimo de livro  \n")
+            var opcao = servicoProfessor.sc.nextInt()
+
+            when(opcao){
+                1 -> {
+                    Dados.visualizaDados(usuario)
+                }
+                2 -> {
+                    alteraDados()
+                }
+                3 -> {
+                    Emprestimo.procurarLivro(servicoLivro.livros, usuario)
+                }
+                4 -> {
+                    Emprestimo.renovarExemplares()
+                }
+                5 -> {
+                    Emprestimo.devolverExemplares()
+                }
+                6 -> {
+                    Emprestimo.verificarSituacao()
+                }
+                else -> {
+                    println("Opção não possível.\n")
+                }
+            }
         }
         fun cadastraUser(){
             var id = gerarId()
@@ -64,10 +93,10 @@ class servicoExterno {
             sc.nextLine()
 
             println("Nome:")
-            var nome = sc.next()
+            var nome = sc.nextLine()
 
             println("Endereço: ")
-            var endereco = sc.next()
+            var endereco = sc.nextLine()
 
             println("Cep: ")
             var cep = sc.nextInt()
@@ -121,6 +150,12 @@ class servicoExterno {
                     "       > Tipo de sócio : ${usuario.tipoSocio}\n" +
                     "       > Id da operação : ${UUID.randomUUID()}\n")
             main()
+        }
+        fun visualizaDados(usuario : Socio){
+
+        }
+        fun alteraDados(){
+
         }
     }
 }
