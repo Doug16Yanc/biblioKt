@@ -19,14 +19,13 @@ fun geraInteracao(){
     println("   P/p - professor      \n")
     println("   A/a - estudante      \n")
     println("   E/e - externo        \n")
-
     var opcao = sc.next()
 
     when(opcao.lowercase(Locale.getDefault())){
         "b" -> {servicoBiblio.loginBiblio()}
         "p" -> {servicoProfessor.interagePrimeiro()}
         "a" -> {servicoAluno.interagePrimeiro()}
-        "e" -> {servicoExterno.loginExterno()}
+        "e" -> {servicoExterno.interagePrimeiro()}
         else -> {
             println("Opção não possível.\n")
             System.exit(0)

@@ -3,12 +3,25 @@ package services
 import application.main
 import entities.Socio
 import enumerations.DescricaoSocio
+import services.servicoAluno.Companion.aluno
+import services.servicoExterno.Companion.usuario
+import services.servicoProfessor.Companion.professor
 import java.util.Scanner
 
 class servicoBiblio {
 
 
     companion object {
+        val aluno = mutableListOf<Socio>()
+        val professor = mutableListOf<Socio>()
+        val usuario = mutableListOf<Socio>()
+
+        val users = mutableListOf<Socio>().apply {
+            addAll(aluno)
+            addAll(professor)
+            addAll(usuario)
+        }
+
         val socios  = listOf(Socio(12756, "Dooglahs", "Boulevard of Broken Dreams",
             78788, "","4060", DescricaoSocio.BIBLIOTECÁRIO))
 
@@ -44,7 +57,7 @@ class servicoBiblio {
             println("          REGISTROS, CONSULTAS, ALTERAÇÕES          \n\n" +
                     "               RECURSOS HUMANOS\n\n" +
                     "               1 - Ir para funções de bibliotecário\n" +
-                    "               2 - Consultar usuários\n" +
+                    "               2 - Consultar usuários\n\n" +
                     "               RECURSOS FÍSICOS\n\n" +
                     "               3 - Livros\n\n" +
                     "               RECURSOS SENSÍVEIS\n\n" +
@@ -58,7 +71,7 @@ class servicoBiblio {
 
             when(opcao){
                 1 -> controlaBiblio()
-                2 -> consultaUsuarios()
+                2 -> consultaUsuarios(socios)
                 3 -> servicoLivro.controlaLivro()
                 4 -> visualizaDados(socios)
                 5 -> alteraDados()
@@ -81,12 +94,26 @@ class servicoBiblio {
                     "               > CEP : ${socio.cepSocio}\n" +
                     "               > Email : ${socio.emailSocio}\n" +
                     "               > Tipo de sócio : ${socio.tipoSocio}\n")
+            interageBiblio(socio)
         }
         fun alteraDados(){
 
         }
-        fun consultaUsuarios(){
-
+        fun consultaUsuarios(socio : Socio){
+            if (!users.isEmpty()){
+                for (socio in users){
+                    println("***************DADOS DOS SÓCIOS************\n")
+                    println("               > Nome : ${socio.nomeSocio}\n" +
+                            "               > Endereço : ${socio.enderecoSocio}\n" +
+                            "               > CEP : ${socio.cepSocio}\n" +
+                            "               > Email : ${socio.emailSocio}\n" +
+                            "               > Tipo de sócio : ${socio.tipoSocio}\n")
+                }
+            }
+            else{
+                println("Nenhum sócio ainda além de você.")
+            }
+            interageBiblio(socio)
         }
     }
 

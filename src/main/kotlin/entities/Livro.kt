@@ -5,6 +5,6 @@ data class Livro(var isbn: Long,
                 var ano : Int,
                 var edicao : Int,
                 var paginas : Int,
-                val genero : Genero,
-                val autor : Autor,
-                val editora : Editora)
+                var genero : Genero,
+                var autor : Autor,
+                var editora : Editora)

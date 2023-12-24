@@ -9,7 +9,7 @@ import kotlin.collections.ArrayList
 
 class servicoLivro {
     companion object{
-        var livros : List<Livro> = ArrayList()
+        var livros : MutableList<Livro> = ArrayList()
         val sc = Scanner(System.`in`)
         fun controlaLivro(){
             println("************PÁGINA DO LIVRO**************\n")
@@ -19,18 +19,71 @@ class servicoLivro {
             var opcao = sc.nextInt()
 
             when(opcao){
-                1 -> {guardaLivros()}
-                2 -> {registrarLivro()}
+                1 -> {
+                    listaLivros()
+                }
+                2 -> {
+                    registrarLivro()
+                }
                 else -> {
                     println("Opção não possível.\n")
                 }
             }
         }
+        fun registrarLivro(){
+            println("ISBN do livro:")
+            var isbn = sc.nextLong()
+
+            sc.nextLine()
+
+            println("Título:")
+            var titulo = sc.nextLine()
+
+            println("Ano de publicação:")
+            var ano = sc.nextInt()
+
+            sc.nextLine()
+
+            println("Edição :")
+            var edicao = sc.nextInt()
+
+            sc.nextLine()
+
+            println("Número de páginas:")
+            var paginas = sc.nextInt()
+
+            sc.nextLine()
+
+            println("Gênero :")
+            var genero = sc.nextLine()
+
+            println("Autor:")
+            var autor = sc.nextLine()
+
+            println("Nome da editora:")
+            var nomeEditora = sc.nextLine()
+
+            println("Cidade da editora:")
+            var cidEditora = sc.nextLine()
+
+            val livro = Livro(isbn, titulo, ano, edicao, paginas, Genero(genero), Autor(autor), Editora(nomeEditora, cidEditora))
+
+            livros.add(livro)
+
+            controlaLivro()
+        }
         fun guardaLivros(){
-            livros = listOf(Livro(1245284, "Crime e Castigo", 1866, 3, 500, Genero("Romance filosófico"), Autor("Fiodor " +
-                    "Dostoievski"), Editora("Companhia das Letras", "São Paulo")
-            ))
-            println("*********LIVROS DISPONÍVEIS***********\n\n")
+            livros.add(
+                    Livro(
+                        1245284, "Crime e Castigo", 1866, 3, 500, Genero("Romance filosófico"), Autor(
+                            "Fiodor " +
+                                    "Dostoievski"
+                        ), Editora("Companhia das Letras", "São Paulo")))
+            livros.add(Livro(14562345, "O Estrangeiro", 1942, 2, 128, Genero("Romance filosófico"), Autor("Albert" +
+                        "Camus"), Editora("Intrínseca", "Rio de Janeiro")))
+
+        }
+        fun listaLivros(){
             for (livro : Livro in livros){
                 println("> ISBN : ${livro.isbn}\n" +
                         "> Título : ${livro.titulo}\n" +
@@ -42,10 +95,7 @@ class servicoLivro {
                         "> Cidade da editora: ${livro.editora.cidadeEditora}\n")
 
             }
-
-        }
-        fun registrarLivro(){
-
+            controlaLivro()
         }
     }
 }
