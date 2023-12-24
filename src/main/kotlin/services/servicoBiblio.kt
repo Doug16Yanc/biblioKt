@@ -3,10 +3,8 @@ package services
 import application.main
 import entities.Socio
 import enumerations.DescricaoSocio
-import services.servicoAluno.Companion.aluno
-import services.servicoExterno.Companion.usuario
-import services.servicoProfessor.Companion.professor
-import java.util.Scanner
+import java.util.*
+import kotlin.collections.ArrayList
 
 class servicoBiblio {
 
@@ -21,10 +19,21 @@ class servicoBiblio {
             addAll(professor)
             addAll(usuario)
         }
+        val socios: MutableList<Socio> = ArrayList()
 
-        val socios  = listOf(Socio(12756, "Dooglahs", "Boulevard of Broken Dreams",
-            78788, "","4060", DescricaoSocio.BIBLIOTECÁRIO))
-
+        init {
+            socios.add(
+                Socio(
+                    12756,
+                    "Dooglahs",
+                    "Boulevard of Broken Dreams",
+                    78788,
+                    "",
+                    "4060",
+                    DescricaoSocio.BIBLIOTECÁRIO
+                )
+            )
+        }
         val sc = Scanner(System.`in`)
         fun loginBiblio() {
             var tentativas : Int = 3
@@ -34,7 +43,6 @@ class servicoBiblio {
 
                 println("Senha de acesso:")
                 var senha = sc.nextLine()
-
 
                 val socioEncontrado = socios.find {it.nomeSocio == nome && it.senha == senha}
 
@@ -86,6 +94,25 @@ class servicoBiblio {
                     "       3 - Listar bibliotecário            \n" +
                     "       4 - Remover bibliotecário           \n" +
                     "       5 - ")
+            var opcao = sc.nextInt()
+
+            when(opcao){
+                1 -> {
+                    cadastraBiblio()
+                }
+                2 -> {
+                    consultaBiblio()
+                }
+                3 -> {
+                    listaBiblio()
+                }
+                4 -> {
+                    removeBiblio()
+                }
+                else -> {
+                    println("Opção não possível.\n")
+                }
+            }
         }
         fun visualizaDados(socio : Socio){
             println("***************DADOS DO SÓCIO BIBLIOTECÁRIO************\n")
@@ -114,6 +141,54 @@ class servicoBiblio {
                 println("Nenhum sócio ainda além de você.")
             }
             interageBiblio(socio)
+        }
+        fun cadastraBiblio(){
+            var id = servicoProfessor.gerarId()
+
+            servicoProfessor.sc.nextLine()
+
+            println("Nome:")
+            var nome = sc.nextLine()
+
+            println("Endereço: ")
+            var endereco = sc.nextLine()
+
+            println("Cep: ")
+            var cep = sc.nextInt()
+
+            sc.nextLine()
+
+            println("Email: ")
+            var email = sc.nextLine()
+
+            println("Senha de acesso: ")
+            var senha = sc.nextLine()
+
+            val socio = Socio(id, nome, endereco, cep, email, senha, DescricaoSocio.BIBLIOTECÁRIO )
+
+            socios.add(socio)
+
+            geraComprovante(socio)
+
+            sc.close()
+        }
+        fun geraComprovante(biblio : Socio){
+            println("********COMPROVANTE DE CADASTRO NO SISTEMA***************\n")
+            println("       > Nome do estudante: ${biblio.nomeSocio}\n" +
+                    "       > Endereço : ${biblio.enderecoSocio}\n" +
+                    "       > Cep : ${biblio.cepSocio}\n" +
+                    "       > Email : ${biblio.emailSocio}\n" +
+                    "       > Tipo de sócio : ${biblio.tipoSocio}\n" +
+                    "       > Id da operação : ${UUID.randomUUID()}\n")
+        }
+        fun consultaBiblio(){
+
+        }
+        fun listaBiblio(){
+
+        }
+        fun removeBiblio(){
+
         }
     }
 

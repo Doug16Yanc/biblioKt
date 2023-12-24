@@ -1,5 +1,6 @@
 package services
 
+import application.main
 import entities.Socio
 import enumerations.DescricaoSocio
 import java.util.*
@@ -31,10 +32,13 @@ class servicoExterno {
         fun loginUser(){
             var tentativas : Int = 3
             do {
-                println("Nome:")
-                var nome = servicoAluno.sc.nextLine()
+                sc.nextLine()
 
-                var senha = System.console().readPassword("Senha de acesso: ").joinToString("")
+                println("Nome:")
+                var nome = sc.nextLine()
+
+                println("Senha de acesso: ")
+                var senha = sc.nextLine()
 
                 val userEncontrado = usuario.find { it.nomeSocio == nome && it.senha == senha }
 
@@ -56,24 +60,31 @@ class servicoExterno {
         }
         fun cadastraUser(){
             var id = gerarId()
+
+            sc.nextLine()
+
             println("Nome:")
-            var nome = sc.nextLine()
+            var nome = sc.next()
 
             println("Endereço: ")
-            var endereco = sc.nextLine()
+            var endereco = sc.next()
 
             println("Cep: ")
-            var cep = sc.nextLong()
+            var cep = sc.nextInt()
+
+            sc.nextLine()
 
             println("Email: ")
             var email = sc.nextLine()
 
-            var senha = System.console().readPassword("Senha de acesso: ").joinToString("")
-
+            println("Senha de acesso: ")
+            var senha = sc.nextLine()
 
             val user = Socio(id, nome, endereco, cep, email, senha, DescricaoSocio.EXTERNO )
 
             usuario.add(user)
+
+            geraComprovante(user)
 
             sc.close()
 
@@ -99,6 +110,17 @@ class servicoExterno {
             }
 
             return entrada
+        }
+        fun geraComprovante(usuario : Socio){
+            println("********COMPROVANTE DE CADASTRO NO SISTEMA***************\n")
+            println("       > Nome do estudante: ${usuario.nomeSocio}\n" +
+                    "       > Id do estudante : ${usuario.id}\n" +
+                    "       > Endereço : ${usuario.enderecoSocio}\n" +
+                    "       > Cep : ${usuario.cepSocio}\n" +
+                    "       > Email : ${usuario.emailSocio}\n" +
+                    "       > Tipo de sócio : ${usuario.tipoSocio}\n" +
+                    "       > Id da operação : ${UUID.randomUUID()}\n")
+            main()
         }
     }
 }

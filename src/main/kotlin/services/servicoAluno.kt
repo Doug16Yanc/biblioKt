@@ -1,7 +1,9 @@
 package services
 
+import application.main
 import entities.Socio
 import enumerations.DescricaoSocio
+import services.servicoLivro.Companion.livros
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
@@ -12,7 +14,7 @@ class servicoAluno {
 
         val sc = Scanner(System.`in`)
         fun interagePrimeiro(){
-            println("Já é aluno cadastrado ou não?\n S/s - sim\nN/n - não\n\n")
+            println("Já é aluno cadastrado ou não?\nS/s - sim\nN/n - não\n\n")
             var alternativa = sc.next()
 
             when(alternativa.lowercase(Locale.getDefault())){
@@ -31,10 +33,13 @@ class servicoAluno {
         fun loginAluno(){
             var tentativas : Int = 3
             do {
+                sc.nextLine()
+
                 println("Nome:")
                 var nome = sc.nextLine()
 
-                var senha = System.console().readPassword("Senha de acesso: ").joinToString("")
+                println("Senha de acesso: ")
+                var senha = sc.nextLine()
 
                 val alunoEncontrado = aluno.find { it.nomeSocio == nome && it.senha == senha }
 
@@ -52,32 +57,65 @@ class servicoAluno {
             println("**********PÁGINA OFICIAL DO ALUNO**************\n")
             println("Bem-vindo(a), ${aluno.nomeSocio}, caríssimo estudante:")
             println("               RECURSOS HUMANOS                \n\n")
-            println("               1 - ")
+            println("               1 - Visualizar seus dados       \n" +
+                    "               2 - Alterar seus dados          \n\n" +
+                    "               RECURSOS FÍSICOS                \n\n" +
+                    "               3 - Realizar empréstimo de livro \n" +
+                    "               4 - Renovar empréstimo de livro  \n")
+            var opcao = sc.nextInt()
+
+            when(opcao){
+                1 -> {
+                    visualizaDados(aluno)
+                }
+                2 -> {
+                    alteraDados()
+                }
+                3 -> {
+                    Emprestimo.procurarLivro(servicoLivro.livros, aluno)
+                }
+                4 -> {
+                    Emprestimo.renovarExemplares()
+                }
+                5 -> {
+                    Emprestimo.devolverExemplares()
+                }
+                6 -> {
+                    Emprestimo.verificarSituacao()
+                }
+                else -> {
+                    println("Opção não possível.\n")
+                }
+            }
         }
         fun cadastraAluno(){
             var id = gerarId()
-            println("Nome:")
-            var nome = sc.next()
 
             sc.nextLine()
 
+            println("Nome:")
+            var nome = sc.nextLine()
+
             println("Endereço: ")
-            var endereco = sc.next()
+            var endereco = sc.nextLine()
+
 
             println("Cep: ")
-            var cep = sc.nextLong()
+            var cep = sc.nextInt()
 
             sc.nextLine()
 
             println("Email: ")
             var email = sc.nextLine()
 
-            var senha = System.console().readPassword("Senha de acesso: ").joinToString("")
-
+            println("Senha de acesso: ")
+            var senha = sc.nextLine()
 
             val alu = Socio(id, nome, endereco, cep, email, senha, DescricaoSocio.ALUNO)
 
             aluno.add(alu)
+
+            geraComprovante(alu)
 
             sc.close()
 
@@ -103,6 +141,29 @@ class servicoAluno {
             }
 
             return entrada
+        }
+        fun geraComprovante(aluno : Socio){
+            println("********COMPROVANTE DE CADASTRO NO SISTEMA***************\n")
+            println("       > Nome do estudante: ${aluno.nomeSocio}\n" +
+                    "       > Id do estudante: ${aluno.id}\n" +
+                    "       > Endereço : ${aluno.enderecoSocio}\n" +
+                    "       > Cep : ${aluno.cepSocio}\n" +
+                    "       > Email : ${aluno.emailSocio}\n" +
+                    "       > Tipo de sócio : ${aluno.tipoSocio}\n" +
+                    "       > Id da operação : ${UUID.randomUUID()}\n")
+            main()
+        }
+        fun visualizaDados(aluno: Socio){
+            println("********VISUALIZAÇÃO DE DADOS DO ESTUDANTE***********\n")
+            println("       > Nome do estudante: ${aluno.nomeSocio}\n" +
+                    "       > Id do estudante: ${aluno.id}\n" +
+                    "       > Endereço : ${aluno.enderecoSocio}\n" +
+                    "       > Cep : ${aluno.cepSocio}\n" +
+                    "       > Email : ${aluno.emailSocio}\n" +
+                    "       > Tipo de sócio : ${aluno.tipoSocio}\n")
+        }
+        fun alteraDados(){
+
         }
     }
 }

@@ -32,7 +32,7 @@ class servicoLivro {
         }
         fun registrarLivro(){
             println("ISBN do livro:")
-            var isbn = sc.nextLong()
+            var isbn = sc.nextInt()
 
             sc.nextLine()
 
