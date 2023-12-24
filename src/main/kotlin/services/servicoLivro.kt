@@ -82,9 +82,19 @@ class servicoLivro {
                             "Fiodor " +
                                     "Dostoievski"
                         ), Editora("Companhia das Letras", "São Paulo")))
-            livros.add(Livro(14562345, "O Estrangeiro", 1942, 2, 128, Genero("Romance filosófico"), Autor("Albert" +
-                        "Camus"), Editora("Intrínseca", "Rio de Janeiro")))
-
+            livros.add(Livro
+                (
+                14562345, "O Estrangeiro", 1942, 2, 128, Genero("Romance filosófico"), Autor(
+                "Albert Camus"), Editora("Intrínseca", "Rio de Janeiro")))
+            livros.add(Livro
+                (
+                1463744, "Metamorfose", 1915, 2, 96, Genero("Fantasia"),
+                Autor("Franz Kafka"), Editora("Rocco", "Rio de Janeiro")))
+            livros.add(Livro
+                (1635464, "Minha Querida Sputnik", 1999, 6, 232, Genero("Realismo mágico"),
+                Autor("Haruki Murakami"), Editora("Panda Books", "São Paulo")))
+            livros.add(Livro(17458293, "eu tenho sérios poemas mentais", 2018, 1, 192, Genero("Poesia"),
+                Autor("Pedro Salomão"), Editora("Sextante", "Rio de Janeiro")))
         }
         fun listaLivros(){
             for (livro : Livro in livros){

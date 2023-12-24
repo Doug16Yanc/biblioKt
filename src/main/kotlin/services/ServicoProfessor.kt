@@ -46,7 +46,8 @@ class servicoProfessor {
                     controlaProf(profEncontrado)
                 }
                 else{
-                    println("Nome de usuário ou senha não reconhecidos.\n")
+                    println("Nome de usuário ou senha não reconhecidos. Chances = ${tentativas - 1}\n")
+                    tentativas--
                 }
 
             }while(tentativas > 0)
@@ -152,9 +153,6 @@ class servicoProfessor {
                     "       > Tipo de sócio : ${professor.tipoSocio}\n" +
                     "       > Id da operação : ${UUID.randomUUID()}")
             main()
-        }
-        fun visualizaDados(professor : Socio){
-
         }
         fun alteraDados(){
 

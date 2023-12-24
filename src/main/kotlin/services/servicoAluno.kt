@@ -47,7 +47,8 @@ class servicoAluno {
                     controlaAluno(alunoEncontrado)
                 }
                 else{
-                    println("Nome de usuário ou senha não reconhecidos.\n")
+                    println("Nome de usuário ou senha não reconhecidos. Chances = ${tentativas - 1}\n")
+                    tentativas--
                 }
 
             }while(tentativas > 0)

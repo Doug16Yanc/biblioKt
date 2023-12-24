@@ -10,17 +10,15 @@ class servicoBiblio {
 
 
     companion object {
-        val aluno = mutableListOf<Socio>()
-        val professor = mutableListOf<Socio>()
-        val usuario = mutableListOf<Socio>()
-
-        val users = mutableListOf<Socio>().apply {
-            addAll(aluno)
-            addAll(professor)
-            addAll(usuario)
-        }
         val socios: MutableList<Socio> = ArrayList()
+        val users =  mutableListOf<Socio>()
+        init {
 
+                users.addAll(servicoAluno.aluno)
+                users.addAll(servicoProfessor.professor)
+                users.addAll(servicoExterno.usuario)
+                users.addAll(socios)
+        }
         init {
             socios.add(
                 Socio(
@@ -161,7 +159,6 @@ class servicoBiblio {
 
             geraComprovante(socio)
 
-            sc.close()
         }
         fun geraComprovante(biblio : Socio){
             println("********COMPROVANTE DE CADASTRO NO SISTEMA***************\n")
