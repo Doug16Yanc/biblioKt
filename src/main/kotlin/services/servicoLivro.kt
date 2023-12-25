@@ -12,7 +12,7 @@ class servicoLivro {
             guardaLivros()
         }
         val sc = Scanner(System.`in`)
-        fun controlaLivro(socio : Socio){
+        fun controlaLivro(socio: Socio){
             println("************PÁGINA DO LIVRO**************\n")
             println("           1 - Ver livros disponíveis          \n" +
                     "           2 - Registrar novo livro            \n" +
@@ -32,6 +32,15 @@ class servicoLivro {
                 }
                 3 -> {
                     Emprestimo.procurarLivro(livros, socio)
+                }
+                4 -> {
+                    Emprestimo.renovarExemplares(socio)
+                }
+                5 -> {
+                    Emprestimo.devolverExemplares(socio)
+                }
+                6 -> {
+                    Emprestimo.verificarSituacao(socio)
                 }
                 else -> {
                     println("Opção não possível.\n")

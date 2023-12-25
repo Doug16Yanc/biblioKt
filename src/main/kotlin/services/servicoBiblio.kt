@@ -5,6 +5,7 @@ import entities.Socio
 import enumerations.DescricaoSocio
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.random.Random
 
 class servicoBiblio {
 
@@ -76,7 +77,7 @@ class servicoBiblio {
             var opcao = sc.nextInt()
 
             when(opcao){
-                1 -> controlaBiblio()
+                1 -> controlaBiblio(socios)
                 2 -> consultaUsuarios(socios)
                 3 -> servicoLivro.controlaLivro(socios)
                 4 -> Dados.visualizaDados(socios)
@@ -85,11 +86,10 @@ class servicoBiblio {
                 7 -> System.exit(0)
             }
         }
-        fun controlaBiblio(){
+        fun controlaBiblio(socio : Socio){
             println("CARO BIBLIOTECÁRIO, ESCOLHA UMA OPÇÃO")
             println("       1 - Regitrar um novo bibliotecário  \n" +
-                    "       2 - Consultar bibliotecário         \n" +
-                    "       3 - Listar bibliotecário            \n" +
+                    "       2 - Consultar usuário               \n" +
                     "       4 - Remover bibliotecário           \n" +
                     "       5 - ")
             var opcao = sc.nextInt()
@@ -99,12 +99,9 @@ class servicoBiblio {
                     cadastraBiblio()
                 }
                 2 -> {
-                    consultaBiblio()
+                    consultaUsuario(socio)
                 }
-                3 -> {
-                    listaBiblio()
-                }
-                4 -> {
+                3-> {
                     removeBiblio()
                 }
                 else -> {
@@ -115,7 +112,7 @@ class servicoBiblio {
         fun alteraDados(){
 
         }
-        fun consultaUsuarios(socio : Socio){
+        fun consultaUsuarios(socio: Socio){
             if (!users.isEmpty()){
                 for (socio in users){
                     println("***************DADOS DOS SÓCIOS************\n")
@@ -131,8 +128,30 @@ class servicoBiblio {
             }
             interageBiblio(socio)
         }
+        fun gerarId(): Int {
+            var num = 0
+
+            var entrada = Random.nextInt(100000, 1000000)
+            var aux = true
+
+            while (entrada.toInt() != 1) {
+                for (i in 0 until socios.size) {
+                    if (entrada == socios[i].id) {
+                        aux = false
+                    }
+                }
+
+                if (aux) {
+                    return entrada
+                } else {
+                    entrada = Random.nextInt(100000, 1000000)
+                }
+            }
+
+            return entrada
+        }
         fun cadastraBiblio(){
-            var id = servicoProfessor.gerarId()
+            var id = gerarId()
 
             sc.nextLine()
 
@@ -169,11 +188,52 @@ class servicoBiblio {
                     "       > Tipo de sócio : ${biblio.tipoSocio}\n" +
                     "       > Id da operação : ${UUID.randomUUID()}\n")
         }
-        fun consultaBiblio(){
+        fun consultaUsuario(socio : Socio){
+            println("Procurar por: \n" +
+                    "I - Id\n" +
+                    "N - Nome\n")
+            var opcao = Emprestimo.sc.nextLine()
 
-        }
-        fun listaBiblio(){
+            when(opcao.lowercase(Locale.getDefault())) {
+                "i" -> {
+                    println("Digite o id do usuário:")
+                    var id = sc.nextInt()
 
+                    val usuarioEncontrado = users.find { it.id == id }
+
+                    if (usuarioEncontrado != null) {
+                        println("Usuário encontrado com sucesso...\n")
+                        Dados.visualizaDados(usuarioEncontrado)
+                    }
+                    else{
+                        println("Usuário não encontrado.\n")
+                    }
+                }
+
+                "n" -> {
+                    Emprestimo.sc.nextLine()
+                    println("Digite o título do livro:")
+                    var nome = sc.nextLine()
+
+                    val userEncontrado = users.find { it.nomeSocio == nome.replaceFirstChar {
+                        if (it.isLowerCase()) it.titlecase(
+                            Locale.getDefault()
+                        ) else it.toString()
+                    }}
+
+                    if (userEncontrado != null) {
+                        println("Usuário encontrado com sucesso...\n")
+                        Dados.visualizaDados(userEncontrado)
+                    }
+                    else{
+                        println("Usuário não encontrado.\n")
+                    }
+                }
+                else -> {
+                    println("Opção não possível.\n")
+                }
+            }
+            interageBiblio(socio)
         }
         fun removeBiblio(){
 

@@ -77,13 +77,13 @@ class servicoExterno {
                     Emprestimo.procurarLivro(servicoLivro.livros, usuario)
                 }
                 4 -> {
-                    Emprestimo.renovarExemplares()
+                    Emprestimo.renovarExemplares(usuario)
                 }
                 5 -> {
-                    Emprestimo.devolverExemplares()
+                    Emprestimo.devolverExemplares(usuario)
                 }
                 6 -> {
-                    Emprestimo.verificarSituacao()
+                    Emprestimo.verificarSituacao(usuario)
                 }
                 else -> {
                     println("Opção não possível.\n")
@@ -121,10 +121,10 @@ class servicoExterno {
             sc.close()
 
         }
-        fun gerarId(): Long {
+        fun gerarId(): Int {
             var num = 0
 
-            var entrada = Random.nextLong(100000, 1000000)
+            var entrada = Random.nextInt(100000, 1000000)
             var aux = true
 
             while (entrada.toInt() != 1) {
@@ -137,7 +137,7 @@ class servicoExterno {
                 if (aux) {
                     return entrada
                 } else {
-                    entrada = Random.nextLong(100000, 1000000)
+                    entrada = Random.nextInt(100000, 1000000)
                 }
             }
 
