@@ -7,7 +7,6 @@ data class Renovacao(
 )
 
 fun registrarRenovacao(){
-
 }
 
 fun consultarRenovacao(){

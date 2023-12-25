@@ -62,7 +62,9 @@ class servicoAluno {
                     "               2 - Alterar seus dados          \n\n" +
                     "               RECURSOS FÍSICOS                \n\n" +
                     "               3 - Realizar empréstimo de livro \n" +
-                    "               4 - Renovar empréstimo de livro  \n")
+                    "               4 - Renovar empréstimo de livro  \n" +
+                    "               5 - Devolver exemplar            \n" +
+                    "               6 - Verificar situação           \n")
             var opcao = sc.nextInt()
 
             when(opcao){

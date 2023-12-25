@@ -78,7 +78,7 @@ class servicoBiblio {
             when(opcao){
                 1 -> controlaBiblio()
                 2 -> consultaUsuarios(socios)
-                3 -> servicoLivro.controlaLivro()
+                3 -> servicoLivro.controlaLivro(socios)
                 4 -> Dados.visualizaDados(socios)
                 5 -> alteraDados()
                 6 -> main()
