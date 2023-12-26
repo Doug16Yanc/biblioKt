@@ -2,13 +2,8 @@ package services
 
 import java.util.*
 
-data class Renovacao(
-    val dataRenovacao: Date
-)
+class Renovacao {
+    fun consultarRenovacao() {
 
-fun registrarRenovacao(){
-}
-
-fun consultarRenovacao(){
-
+    }
 }

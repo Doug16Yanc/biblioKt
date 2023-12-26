@@ -1,5 +1,6 @@
 package services
 
+import application.geraInteracao
 import application.main
 import entities.Socio
 import enumerations.DescricaoSocio
@@ -59,12 +60,15 @@ class servicoProfessor {
             println("               RECURSOS HUMANOS                \n\n")
             println("               1 - Visualizar seus dados       \n" +
                     "               2 - Alterar seus dados          \n" +
-                "                   3 - Remover seu cadastro        \n\n" +
+                    "               3 - Remover seu cadastro        \n\n" +
                     "               RECURSOS FÍSICOS                \n\n" +
                     "               4 - Realizar empréstimo de livro \n" +
                     "               5 - Renovar empréstimo de livro  \n" +
                     "               6 - Devolver exemplar            \n" +
-                    "               7 - Verificar situação           \n")
+                    "               7 - Verificar situação           \n\n" +
+                    "               RECURSOS DE SISTEMA              \n\n" +
+                    "               8 - Retornar à página inicial    \n" +
+                    "               9 - Encerrar operação           \n\n")
             var opcao = sc.nextInt()
 
             when(opcao){
@@ -88,6 +92,13 @@ class servicoProfessor {
                 }
                 7 -> {
                     Emprestimo.verificarSituacao(professor)
+                }
+                8 -> {
+                    geraInteracao()
+                }
+                9 -> {
+                    println("Até mais, ${professor.nomeSocio}!\n")
+                    System.exit(0)
                 }
                 else -> {
                     println("Opção não possível.\n")

@@ -1,5 +1,6 @@
 package services
 
+import application.geraInteracao
 import application.main
 import entities.Socio
 import enumerations.DescricaoSocio
@@ -77,13 +78,27 @@ class servicoBiblio {
             var opcao = sc.nextInt()
 
             when(opcao){
-                1 -> controlaBiblio(socios)
-                2 -> consultaUsuarios(socios)
-                3 -> servicoLivro.controlaLivro(socios)
-                4 -> Dados.visualizaDados(socios)
-                5 -> alteraDados()
-                6 -> main()
-                7 -> System.exit(0)
+                1 -> {
+                    controlaBiblio(socios)
+                }
+                2 -> {
+                    consultaUsuarios(socios)
+                }
+                3 -> {
+                    servicoLivro.controlaLivro(socios)
+                }
+                4 -> {
+                    Dados.visualizaDados(socios)
+                }
+                5 -> {
+                    alteraDados()
+                }
+                6 -> {
+                    geraInteracao()
+                }
+                7 -> {
+                    println("Até mais, ${socios.nomeSocio}.\n")
+                    System.exit(0)}
             }
         }
         fun controlaBiblio(socio : Socio){

@@ -61,11 +61,9 @@ class Dados {
                         "removido seu cadastro, precisará registrar-se novamente, caso" +
                         "desejes ter acesso a nossos serviços.\n\n")
                 println("Confirme sua senha:")
-                var senha = sc.next()
+                var senha = sc.nextLine()
 
-                val senhaCorreta = socios.find{ it.senha == senha}
-
-                if (senhaCorreta != null){
+                if (socio.senha == senha ){
                     println("Realizando processo de remoção...")
                     socios.remove(socio)
                     comprovaRemocao(socio)

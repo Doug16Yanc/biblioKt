@@ -1,5 +1,6 @@
 package services
 
+import application.geraInteracao
 import application.main
 import entities.Socio
 import enumerations.DescricaoSocio
@@ -51,11 +52,11 @@ class servicoExterno {
                 }
 
             }while(tentativas > 0)
-
+            geraInteracao()
         }
         fun controlaUser(usuario : Socio){
-            println("**********PÁGINA OFICIAL DO ALUNO**************\n")
-            println("Bem-vindo(a), ${usuario.nomeSocio}, caríssimo estudante:")
+            println("**********PÁGINA OFICIAL DO USUÁRIO**************\n")
+            println("Bem-vindo(a), ${usuario.nomeSocio}, caríssimo usuário:")
             println("               RECURSOS HUMANOS                \n\n")
             println("               1 - Visualizar seus dados       \n" +
                     "               2 - Alterar seus dados          \n" +
@@ -64,7 +65,10 @@ class servicoExterno {
                     "               4 - Realizar empréstimo de livro \n" +
                     "               5 - Renovar empréstimo de livro  \n" +
                     "               6 - Devolver exemplar            \n" +
-                    "               7 - Verificar situação           \n")
+                    "               7 - Verificar situação           \n\n" +
+                    "               RECURSOS DE SISTEMA              \n\n" +
+                    "               8 - Retornar à página inicial    \n" +
+                    "               9 - Encerrar operação           \n\n")
             var opcao = servicoProfessor.sc.nextInt()
 
             when(opcao){
@@ -88,6 +92,13 @@ class servicoExterno {
                 }
                 7 -> {
                     Emprestimo.verificarSituacao(usuario)
+                }
+                8 -> {
+                    geraInteracao()
+                }
+                9 -> {
+                    println("Até mais, ${usuario.nomeSocio}!\n")
+                    System.exit(0)
                 }
                 else -> {
                     println("Opção não possível.\n")
@@ -148,9 +159,6 @@ class servicoExterno {
             return entrada
         }
 
-        fun visualizaDados(usuario : Socio){
-
-        }
         fun alteraDados(){
 
         }
