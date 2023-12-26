@@ -176,18 +176,10 @@ class servicoBiblio {
 
             socios.add(socio)
 
-            geraComprovante(socio)
+            Dados.geraComprovante(socio)
 
         }
-        fun geraComprovante(biblio : Socio){
-            println("********COMPROVANTE DE CADASTRO NO SISTEMA***************\n")
-            println("       > Nome do estudante: ${biblio.nomeSocio}\n" +
-                    "       > Endereço : ${biblio.enderecoSocio}\n" +
-                    "       > Cep : ${biblio.cepSocio}\n" +
-                    "       > Email : ${biblio.emailSocio}\n" +
-                    "       > Tipo de sócio : ${biblio.tipoSocio}\n" +
-                    "       > Id da operação : ${UUID.randomUUID()}\n")
-        }
+
         fun consultaUsuario(socio : Socio){
             println("Procurar por: \n" +
                     "I - Id\n" +

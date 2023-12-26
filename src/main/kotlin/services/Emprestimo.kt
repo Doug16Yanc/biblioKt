@@ -183,7 +183,7 @@ data class Emprestimo(
             }
 
             println("Exemplares em posse do sócio ${socio.nomeSocio}:\n")
-
+            println("ISBN\t\tTítulo\t\tAutor\t\tEditora\t\n")
             for ((index, exemplar) in socio.exemplaresEmprestados.withIndex()) {
                 println("${exemplar.isbn} - ${exemplar.titulo} - ${exemplar.autor.nomeAutor} - ${exemplar.editora.nomeEditora}\n\n")
             }

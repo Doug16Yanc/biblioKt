@@ -58,12 +58,13 @@ class servicoExterno {
             println("Bem-vindo(a), ${usuario.nomeSocio}, caríssimo estudante:")
             println("               RECURSOS HUMANOS                \n\n")
             println("               1 - Visualizar seus dados       \n" +
-                    "               2 - Alterar seus dados          \n\n" +
+                    "               2 - Alterar seus dados          \n" +
+                    "               3 - Remover seu cadastro        \n\n" +
                     "               RECURSOS FÍSICOS                \n\n" +
-                    "               3 - Realizar empréstimo de livro \n" +
-                    "               4 - Renovar empréstimo de livro  \n" +
-                    "               5 - Devolver exemplar            \n" +
-                    "               6 - Verificar situação           \n")
+                    "               4 - Realizar empréstimo de livro \n" +
+                    "               5 - Renovar empréstimo de livro  \n" +
+                    "               6 - Devolver exemplar            \n" +
+                    "               7 - Verificar situação           \n")
             var opcao = servicoProfessor.sc.nextInt()
 
             when(opcao){
@@ -74,15 +75,18 @@ class servicoExterno {
                     alteraDados()
                 }
                 3 -> {
-                    Emprestimo.procurarLivro(servicoLivro.livros, usuario)
+                    Dados.removerCadastro(usuario)
                 }
                 4 -> {
-                    Emprestimo.renovarExemplares(usuario)
+                    Emprestimo.procurarLivro(servicoLivro.livros, usuario)
                 }
                 5 -> {
-                    Emprestimo.devolverExemplares(usuario)
+                    Emprestimo.renovarExemplares(usuario)
                 }
                 6 -> {
+                    Emprestimo.devolverExemplares(usuario)
+                }
+                7 -> {
                     Emprestimo.verificarSituacao(usuario)
                 }
                 else -> {
@@ -116,7 +120,7 @@ class servicoExterno {
 
             usuario.add(user)
 
-            geraComprovante(user)
+            Dados.geraComprovante(user)
 
             sc.close()
 
@@ -143,17 +147,7 @@ class servicoExterno {
 
             return entrada
         }
-        fun geraComprovante(usuario : Socio){
-            println("********COMPROVANTE DE CADASTRO NO SISTEMA***************\n")
-            println("       > Nome do estudante: ${usuario.nomeSocio}\n" +
-                    "       > Id do estudante : ${usuario.id}\n" +
-                    "       > Endereço : ${usuario.enderecoSocio}\n" +
-                    "       > Cep : ${usuario.cepSocio}\n" +
-                    "       > Email : ${usuario.emailSocio}\n" +
-                    "       > Tipo de sócio : ${usuario.tipoSocio}\n" +
-                    "       > Id da operação : ${UUID.randomUUID()}\n")
-            main()
-        }
+
         fun visualizaDados(usuario : Socio){
 
         }

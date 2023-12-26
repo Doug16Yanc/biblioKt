@@ -58,12 +58,13 @@ class servicoProfessor {
             println("Bem-vindo(a), ${professor.nomeSocio}, caríssimo mestre:")
             println("               RECURSOS HUMANOS                \n\n")
             println("               1 - Visualizar seus dados       \n" +
-                    "               2 - Alterar seus dados          \n\n" +
+                    "               2 - Alterar seus dados          \n" +
+                "                   3 - Remover seu cadastro        \n\n" +
                     "               RECURSOS FÍSICOS                \n\n" +
-                    "               3 - Realizar empréstimo de livro \n" +
-                    "               4 - Renovar empréstimo de livro  \n" +
-                    "               5 - Devolver exemplar            \n" +
-                    "               6 - Verificar situação           \n")
+                    "               4 - Realizar empréstimo de livro \n" +
+                    "               5 - Renovar empréstimo de livro  \n" +
+                    "               6 - Devolver exemplar            \n" +
+                    "               7 - Verificar situação           \n")
             var opcao = sc.nextInt()
 
             when(opcao){
@@ -73,16 +74,19 @@ class servicoProfessor {
                 2 -> {
                     alteraDados()
                 }
-                3 -> {
-                    Emprestimo.procurarLivro(servicoLivro.livros, professor)
+                3 ->{
+                    Dados.removerCadastro(professor)
                 }
                 4 -> {
-                    Emprestimo.renovarExemplares(professor)
+                    Emprestimo.procurarLivro(servicoLivro.livros, professor)
                 }
                 5 -> {
-                    Emprestimo.devolverExemplares(professor)
+                    Emprestimo.renovarExemplares(professor)
                 }
                 6 -> {
+                    Emprestimo.devolverExemplares(professor)
+                }
+                7 -> {
                     Emprestimo.verificarSituacao(professor)
                 }
                 else -> {
@@ -118,7 +122,7 @@ class servicoProfessor {
 
             professor.add(prof)
 
-            geraComprovante(prof)
+            Dados.geraComprovante(prof)
 
             sc.close()
 
@@ -145,17 +149,7 @@ class servicoProfessor {
 
             return entrada
         }
-        fun geraComprovante(professor : Socio){
-            println("********COMPROVANTE DE CADASTRO NO SISTEMA***************\n")
-            println("       > Nome do professor: ${professor.nomeSocio}\n" +
-                    "       > Id do professor: ${professor.id}\n" +
-                    "       > Endereço : ${professor.enderecoSocio}\n" +
-                    "       > Cep : ${professor.cepSocio}\n" +
-                    "       > Email : ${professor.emailSocio}\n" +
-                    "       > Tipo de sócio : ${professor.tipoSocio}\n" +
-                    "       > Id da operação : ${UUID.randomUUID()}")
-            main()
-        }
+
         fun alteraDados(){
 
         }
