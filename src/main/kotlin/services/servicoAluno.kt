@@ -4,14 +4,13 @@ import application.geraInteracao
 import application.main
 import entities.Socio
 import enumerations.DescricaoSocio
+import services.Dados.Companion.socios
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 class servicoAluno {
     companion object{
-        var aluno: MutableList<Socio> = ArrayList()
-
         val sc = Scanner(System.`in`)
         fun interagePrimeiro(){
             println("Já é aluno cadastrado ou não?\nS/s - sim\nN/n - não\n\n")
@@ -41,7 +40,7 @@ class servicoAluno {
                 println("Senha de acesso: ")
                 var senha = sc.nextLine()
 
-                val alunoEncontrado = aluno.find { it.nomeSocio == nome && it.senha == senha }
+                val alunoEncontrado = socios.find { it.nomeSocio == nome && it.senha == senha }
 
                 if (alunoEncontrado != null){
                     controlaAluno(alunoEncontrado)
@@ -65,10 +64,11 @@ class servicoAluno {
                     "               4 - Realizar empréstimo de livro \n" +
                     "               5 - Renovar empréstimo de livro  \n" +
                     "               6 - Devolver exemplar            \n" +
-                    "               7 - Verificar situação           \n\n" +
+                    "               7 - Verificar situação           \n" +
+                    "               8 - Consultar renovações        \n\n" +
                     "               RECURSOS DE SISTEMA             \n\n" +
-                    "               8 - Retornar à página inicial   \n" +
-                    "               9 - Encerrar operação           \n\n")
+                    "               9 - Retornar à página inicial   \n" +
+                    "               10 - Encerrar operação           \n\n")
             var opcao = sc.nextInt()
 
             when(opcao){
@@ -76,7 +76,7 @@ class servicoAluno {
                     Dados.visualizaDados(aluno)
                 }
                 2 -> {
-                    alteraDados()
+                    Dados.alteraDados(aluno)
                 }
                 3 -> {
                     Dados.removerCadastro(aluno)
@@ -85,7 +85,7 @@ class servicoAluno {
                     Emprestimo.procurarLivro(servicoLivro.livros, aluno)
                 }
                 5 -> {
-                    Emprestimo.renovarExemplares(aluno)
+                    Renovacao.renovarExemplares(aluno)
                 }
                 6 -> {
                     Emprestimo.devolverExemplares(aluno)
@@ -94,9 +94,12 @@ class servicoAluno {
                     Emprestimo.verificarSituacao(aluno)
                 }
                 8 -> {
-                    geraInteracao()
+                    Renovacao.consultarRenovacoes(aluno)
                 }
                 9 -> {
+                    geraInteracao()
+                }
+                10 -> {
                     println("Até mais, ${aluno.nomeSocio}!\n")
                     System.exit(0)
                 }
@@ -130,7 +133,7 @@ class servicoAluno {
 
             val alu = Socio(id, nome, endereco, cep, email, senha, DescricaoSocio.ALUNO)
 
-            aluno.add(alu)
+            socios.add(alu)
 
             Dados.geraComprovante(alu)
 
@@ -144,8 +147,8 @@ class servicoAluno {
             var aux = true
 
             while (entrada.toInt() != 1) {
-                for (i in 0 until aluno.size) {
-                    if (entrada == aluno[i].id) {
+                for (i in 0 until socios.size) {
+                    if (entrada == socios[i].id) {
                         aux = false
                     }
                 }
@@ -158,10 +161,6 @@ class servicoAluno {
             }
 
             return entrada
-        }
-
-        fun alteraDados(){
-
         }
     }
 }

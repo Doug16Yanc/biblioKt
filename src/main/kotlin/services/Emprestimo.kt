@@ -1,6 +1,5 @@
 package services
 
-import application.geraInteracao
 import entities.Livro
 import entities.Socio
 import enumerations.Situação
@@ -33,26 +32,31 @@ class Emprestimo {
 
                     if (livroEncontrado != null) {
                         println("Livro encontrado com sucesso...\n")
-                        println(
-                            "Continuar com o processo de empréstimo\n" +
-                                    "S/s - sim\n" +
-                                    "N/n - não\n"
-                        )
-                        var escolha = sc.next()
+                        if (livroEncontrado.situacao != Situação.Emprestado) {
+                            println(
+                                "Continuar com o processo de empréstimo\n" +
+                                        "S/s - sim\n" +
+                                        "N/n - não\n"
+                            )
+                            var escolha = sc.next()
 
-                        when (opcao.lowercase(Locale.getDefault())) {
-                            "s" -> {
-                                registrarEmprestimo(livroEncontrado, socio)
-                            }
+                            when (opcao.lowercase(Locale.getDefault())) {
+                                "s" -> {
+                                    registrarEmprestimo(livroEncontrado, socio)
+                                }
 
-                            "n" -> {
-                                servicoAluno.controlaAluno(socio)
-                            }
+                                "n" -> {
+                                    servicoAluno.controlaAluno(socio)
+                                }
 
-                            else -> {
-                                println("Opção não possível! Retornando...\n")
-                                servicoAluno.controlaAluno(socio)
+                                else -> {
+                                    println("Opção não possível! Retornando...\n")
+                                    servicoAluno.controlaAluno(socio)
+                                }
                             }
+                        }
+                        else{
+                            println("Porém já emprestado para outro sócio")
                         }
 
                     } else {
@@ -75,29 +79,35 @@ class Emprestimo {
 
                     if (bookEncontrado != null) {
                         println("Livro encontrado com sucesso...\n")
-                        println(
-                            "Continuar com o processo de empréstimo\n" +
-                                    "S/s - sim\n" +
-                                    "N/n - não\n"
-                        )
-                        var escolha = sc.nextLine()
+                        if (bookEncontrado.situacao != Situação.Emprestado) {
+                            println(
+                                "Continuar com o processo de empréstimo\n" +
+                                        "S/s - sim\n" +
+                                        "N/n - não\n"
+                            )
+                            var escolha = sc.nextLine()
 
-                        when (escolha.lowercase(Locale.getDefault())) {
-                            "s" -> {
-                                registrarEmprestimo(bookEncontrado, socio)
-                            }
+                            when (escolha.lowercase(Locale.getDefault())) {
+                                "s" -> {
+                                    registrarEmprestimo(bookEncontrado, socio)
+                                }
 
-                            "n" -> {
-                                servicoAluno.controlaAluno(socio)
-                            }
+                                "n" -> {
+                                    servicoAluno.controlaAluno(socio)
+                                }
 
-                            else -> {
-                                println("Opção não possível! Retornando...\n")
-                                servicoAluno.controlaAluno(socio)
+                                else -> {
+                                    println("Opção não possível! Retornando...\n")
+                                    servicoAluno.controlaAluno(socio)
+                                }
                             }
                         }
+                        else {
+                            println("Porém já emprestado para outro sócio.\n")
+                        }
 
-                    } else {
+                    }
+                    else {
                         println("Livro não encontrado.\n")
                     }
                 }
@@ -143,7 +153,7 @@ class Emprestimo {
             }
 
             println("Exemplares em posse do sócio ${socio.nomeSocio}:\n")
-
+            println("ISBN\t-\tAutor\n\n")
             for ((index, exemplar) in socio.exemplaresEmprestados.withIndex()) {
                 println("${exemplar.isbn} - ${exemplar.titulo}")
             }
@@ -155,6 +165,7 @@ class Emprestimo {
 
             if (isbnEncontrado != null) {
                 socio.exemplaresEmprestados.removeIf { it.isbn == opcao }
+                socio.exemplaresRenovados.removeIf{it.isbn == opcao}
                 println("Exemplar '${isbnEncontrado.titulo}' devolvido com sucesso!\n")
                 isbnEncontrado.situacao = Situação.Disponível
                 comprovaDevolucao(socio)
@@ -163,35 +174,6 @@ class Emprestimo {
             }
             Dados.interageTodos(socio)
         }
-
-        fun renovarExemplares(socio: Socio) {
-            println("********** RENOVAÇÃO DE EXEMPLARES **************\n")
-
-            if (socio.exemplaresEmprestados.isEmpty()) {
-                println("Você não possui exemplares para renovar.\n")
-                return
-            }
-
-            println("Exemplares em posse do sócio ${socio.nomeSocio}:\n")
-
-            for ((index, exemplar) in socio.exemplaresEmprestados.withIndex()) {
-                println("${exemplar.isbn} - ${exemplar.titulo}")
-            }
-
-            println("Digite o isbn do exemplar que deseja renovar:")
-            var opcao = sc.nextInt()
-
-            val isbnEncontrado = socio.exemplaresEmprestados.find { it.isbn == opcao }
-
-            if (isbnEncontrado != null) {
-                println("Exemplar '${isbnEncontrado.titulo}' renovado com sucesso!\n")
-                println("> Data e hora da renovação : $formattedDateTime\n\n")
-            } else {
-                println("Opção inválida.\n")
-            }
-            Dados.interageTodos(socio)
-        }
-
         fun verificarSituacao(socio: Socio) {
             println("********** SITUAÇÃO DO SÓCIO **************\n")
             println("Verifique sua situação, ${socio.nomeSocio}, caríssimo.\n\n")
@@ -211,8 +193,8 @@ class Emprestimo {
         }
         fun comprovaDevolucao(socio : Socio){
             println("Comprovo que, para os devidos fins, o sócio ${socio.nomeSocio},\n" +
-                    "${socio.tipoSocio}, realizou na data e hora $formattedDateTime a\n" +
-                    "devolução dos livros que estavam em seu empréstimo.\n\n")
+                    "id igual a ${socio.id}, ${socio.tipoSocio}, realizou na data e " +
+                    "hora $formattedDateTime a devolução dos livros que estavam em seu empréstimo.\n\n")
             Dados.interageTodos(socio)
         }
     }

@@ -4,23 +4,14 @@ import application.geraInteracao
 import application.main
 import entities.Socio
 import enumerations.DescricaoSocio
+import services.Dados.Companion.socios
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 class servicoBiblio {
 
-
     companion object {
-        val socios: MutableList<Socio> = ArrayList()
-        val users =  mutableListOf<Socio>()
-        init {
-
-                users.addAll(servicoAluno.aluno)
-                users.addAll(servicoProfessor.professor)
-                users.addAll(servicoExterno.usuario)
-                users.addAll(socios)
-        }
         init {
             socios.add(
                 Socio(
@@ -91,7 +82,7 @@ class servicoBiblio {
                     Dados.visualizaDados(socios)
                 }
                 5 -> {
-                    alteraDados()
+                    Dados.alteraDados(socios)
                 }
                 6 -> {
                     geraInteracao()
@@ -105,8 +96,7 @@ class servicoBiblio {
             println("CARO BIBLIOTECÁRIO, ESCOLHA UMA OPÇÃO")
             println("       1 - Regitrar um novo bibliotecário  \n" +
                     "       2 - Consultar usuário               \n" +
-                    "       4 - Remover bibliotecário           \n" +
-                    "       5 - ")
+                    "       3 - Retornar à página geral do bibliotecário\n")
             var opcao = sc.nextInt()
 
             when(opcao){
@@ -116,20 +106,17 @@ class servicoBiblio {
                 2 -> {
                     consultaUsuario(socio)
                 }
-                3-> {
-                    removeBiblio()
+                3 -> {
+                    Dados.interageTodos(socio)
                 }
                 else -> {
                     println("Opção não possível.\n")
                 }
             }
         }
-        fun alteraDados(){
-
-        }
         fun consultaUsuarios(socio: Socio){
-            if (!users.isEmpty()){
-                for (socio in users){
+            if (!socios.isEmpty()){
+                for (socio in socios){
                     println("***************DADOS DOS SÓCIOS************\n")
                     println("               > Nome : ${socio.nomeSocio}\n" +
                             "               > Endereço : ${socio.enderecoSocio}\n" +
@@ -206,7 +193,7 @@ class servicoBiblio {
                     println("Digite o id do usuário:")
                     var id = sc.nextInt()
 
-                    val usuarioEncontrado = users.find { it.id == id }
+                    val usuarioEncontrado = socios.find { it.id == id }
 
                     if (usuarioEncontrado != null) {
                         println("Usuário encontrado com sucesso...\n")
@@ -219,10 +206,10 @@ class servicoBiblio {
 
                 "n" -> {
                     Emprestimo.sc.nextLine()
-                    println("Digite o título do livro:")
+                    println("Digite o nome do indivíduo:")
                     var nome = sc.nextLine()
 
-                    val userEncontrado = users.find { it.nomeSocio == nome.replaceFirstChar {
+                    val userEncontrado = socios.find { it.nomeSocio == nome.replaceFirstChar {
                         if (it.isLowerCase()) it.titlecase(
                             Locale.getDefault()
                         ) else it.toString()
@@ -241,9 +228,6 @@ class servicoBiblio {
                 }
             }
             interageBiblio(socio)
-        }
-        fun removeBiblio(){
-
         }
     }
 

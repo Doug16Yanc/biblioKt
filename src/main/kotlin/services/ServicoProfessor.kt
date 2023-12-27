@@ -4,14 +4,13 @@ import application.geraInteracao
 import application.main
 import entities.Socio
 import enumerations.DescricaoSocio
+import services.Dados.Companion.socios
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 class servicoProfessor {
     companion object{
-        var professor: MutableList<Socio> = ArrayList()
-
         val sc = Scanner(System.`in`)
         fun interagePrimeiro(){
             println("Já é professor cadastrado ou não?\nS/s - sim\nN/n - não\n\n")
@@ -41,7 +40,7 @@ class servicoProfessor {
                 println("Senha de acesso: ")
                 var senha = sc.nextLine()
 
-                val profEncontrado = professor.find { it.nomeSocio == nome && it.senha == senha }
+                val profEncontrado = socios.find { it.nomeSocio == nome && it.senha == senha }
 
                 if (profEncontrado != null){
                     controlaProf(profEncontrado)
@@ -56,7 +55,7 @@ class servicoProfessor {
         }
         fun controlaProf(professor : Socio){
             println("**********PÁGINA OFICIAL DO PROFESSOR**************\n")
-            println("Bem-vindo(a), ${professor.nomeSocio}, caríssimo mestre:")
+            println("Bem-vindo(a), ${professor.nomeSocio}, caríssimo(a) mestre:")
             println("               RECURSOS HUMANOS                \n\n")
             println("               1 - Visualizar seus dados       \n" +
                     "               2 - Alterar seus dados          \n" +
@@ -65,10 +64,11 @@ class servicoProfessor {
                     "               4 - Realizar empréstimo de livro \n" +
                     "               5 - Renovar empréstimo de livro  \n" +
                     "               6 - Devolver exemplar            \n" +
-                    "               7 - Verificar situação           \n\n" +
+                    "               7 - Verificar situação           \n" +
+                    "               8 - Consultar renovações        \n\n" +
                     "               RECURSOS DE SISTEMA              \n\n" +
-                    "               8 - Retornar à página inicial    \n" +
-                    "               9 - Encerrar operação           \n\n")
+                    "               9 - Retornar à página inicial    \n" +
+                    "               10 - Encerrar operação           \n\n")
             var opcao = sc.nextInt()
 
             when(opcao){
@@ -76,7 +76,7 @@ class servicoProfessor {
                   Dados.visualizaDados(professor)
                 }
                 2 -> {
-                    alteraDados()
+                    Dados.alteraDados(professor)
                 }
                 3 ->{
                     Dados.removerCadastro(professor)
@@ -85,7 +85,7 @@ class servicoProfessor {
                     Emprestimo.procurarLivro(servicoLivro.livros, professor)
                 }
                 5 -> {
-                    Emprestimo.renovarExemplares(professor)
+                    Renovacao.renovarExemplares(professor)
                 }
                 6 -> {
                     Emprestimo.devolverExemplares(professor)
@@ -94,9 +94,12 @@ class servicoProfessor {
                     Emprestimo.verificarSituacao(professor)
                 }
                 8 -> {
-                    geraInteracao()
+                    Renovacao.consultarRenovacoes(professor)
                 }
                 9 -> {
+                    geraInteracao()
+                }
+                10 -> {
                     println("Até mais, ${professor.nomeSocio}!\n")
                     System.exit(0)
                 }
@@ -128,10 +131,9 @@ class servicoProfessor {
             println("Senha de acesso: ")
             var senha = sc.nextLine()
 
-
             val prof = Socio(id, nome, endereco, cep, email, senha, DescricaoSocio.PROFESSOR )
 
-            professor.add(prof)
+            socios.add(prof)
 
             Dados.geraComprovante(prof)
 
@@ -145,8 +147,8 @@ class servicoProfessor {
             var aux = true
 
             while (entrada.toInt() != 1) {
-                for (i in 0 until professor.size) {
-                    if (entrada == professor[i].id) {
+                for (i in 0 until socios.size) {
+                    if (entrada == socios[i].id) {
                         aux = false
                     }
                 }
@@ -159,10 +161,6 @@ class servicoProfessor {
             }
 
             return entrada
-        }
-
-        fun alteraDados(){
-
         }
     }
 }

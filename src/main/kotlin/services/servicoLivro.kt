@@ -19,7 +19,8 @@ class servicoLivro {
                     "           3 - Solicitar empréstimo de livro   \n" +
                     "           4 - Renovar exemplar(es)            \n" +
                     "           5 - Devolver exemplar(es)           \n" +
-                    "           6 - Verificar situação              \n")
+                    "           6 - Verificar situação              \n" +
+                    "           7 - Consultar renovações            \n\n")
 
             var opcao = sc.nextInt()
 
@@ -28,13 +29,13 @@ class servicoLivro {
                     listaLivros(socio)
                 }
                 2 -> {
-                    registrarLivro(socio)
+                    Exemplar.registrarExemplar(socio)
                 }
                 3 -> {
                     Emprestimo.procurarLivro(livros, socio)
                 }
                 4 -> {
-                    Emprestimo.renovarExemplares(socio)
+                    Renovacao.renovarExemplares(socio)
                 }
                 5 -> {
                     Emprestimo.devolverExemplares(socio)
@@ -42,52 +43,13 @@ class servicoLivro {
                 6 -> {
                     Emprestimo.verificarSituacao(socio)
                 }
+                7 -> {
+                    Renovacao.consultarRenovacoes(socio)
+                }
                 else -> {
                     println("Opção não possível.\n")
                 }
             }
-        }
-        fun registrarLivro(socio : Socio){
-            println("ISBN do livro:")
-            var isbn = sc.nextInt()
-
-            sc.nextLine()
-
-            println("Título:")
-            var titulo = sc.nextLine()
-
-            println("Ano de publicação:")
-            var ano = sc.nextInt()
-
-            sc.nextLine()
-
-            println("Edição :")
-            var edicao = sc.nextInt()
-
-            sc.nextLine()
-
-            println("Número de páginas:")
-            var paginas = sc.nextInt()
-
-            sc.nextLine()
-
-            println("Gênero :")
-            var genero = sc.nextLine()
-
-            println("Autor:")
-            var autor = sc.nextLine()
-
-            println("Nome da editora:")
-            var nomeEditora = sc.nextLine()
-
-            println("Cidade da editora:")
-            var cidEditora = sc.nextLine()
-
-            val livro = Livro(isbn, titulo, ano, edicao, paginas, Genero(genero), Autor(autor), Editora(nomeEditora, cidEditora), Situação.Disponível)
-
-            livros.add(livro)
-
-            controlaLivro(socio)
         }
         fun guardaLivros(){
             livros.add(

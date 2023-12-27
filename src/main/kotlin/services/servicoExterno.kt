@@ -4,14 +4,13 @@ import application.geraInteracao
 import application.main
 import entities.Socio
 import enumerations.DescricaoSocio
+import services.Dados.Companion.socios
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 class servicoExterno {
     companion object{
-        var usuario : MutableList<Socio> = ArrayList()
-
         val sc = Scanner(System.`in`)
         fun interagePrimeiro(){
             println("Já é usuário cadastrado ou não?\nS/s - sim\nN/n - não\n\n")
@@ -41,7 +40,7 @@ class servicoExterno {
                 println("Senha de acesso: ")
                 var senha = sc.nextLine()
 
-                val userEncontrado = usuario.find { it.nomeSocio == nome && it.senha == senha }
+                val userEncontrado = socios.find { it.nomeSocio == nome && it.senha == senha }
 
                 if (userEncontrado != null){
                     controlaUser(userEncontrado)
@@ -65,10 +64,11 @@ class servicoExterno {
                     "               4 - Realizar empréstimo de livro \n" +
                     "               5 - Renovar empréstimo de livro  \n" +
                     "               6 - Devolver exemplar            \n" +
-                    "               7 - Verificar situação           \n\n" +
+                    "               7 - Verificar situação           \n" +
+                    "               8 - Consultar renovações        \n\n" +
                     "               RECURSOS DE SISTEMA              \n\n" +
-                    "               8 - Retornar à página inicial    \n" +
-                    "               9 - Encerrar operação           \n\n")
+                    "               9 - Retornar à página inicial    \n" +
+                    "               10 - Encerrar operação           \n\n")
             var opcao = servicoProfessor.sc.nextInt()
 
             when(opcao){
@@ -76,7 +76,7 @@ class servicoExterno {
                     Dados.visualizaDados(usuario)
                 }
                 2 -> {
-                    alteraDados()
+                    Dados.alteraDados(usuario)
                 }
                 3 -> {
                     Dados.removerCadastro(usuario)
@@ -85,7 +85,7 @@ class servicoExterno {
                     Emprestimo.procurarLivro(servicoLivro.livros, usuario)
                 }
                 5 -> {
-                    Emprestimo.renovarExemplares(usuario)
+                    Renovacao.renovarExemplares(usuario)
                 }
                 6 -> {
                     Emprestimo.devolverExemplares(usuario)
@@ -94,9 +94,12 @@ class servicoExterno {
                     Emprestimo.verificarSituacao(usuario)
                 }
                 8 -> {
-                    geraInteracao()
+                    Renovacao.consultarRenovacoes(usuario)
                 }
                 9 -> {
+                    geraInteracao()
+                }
+                10 -> {
                     println("Até mais, ${usuario.nomeSocio}!\n")
                     System.exit(0)
                 }
@@ -129,7 +132,7 @@ class servicoExterno {
 
             val user = Socio(id, nome, endereco, cep, email, senha, DescricaoSocio.EXTERNO )
 
-            usuario.add(user)
+            socios.add(user)
 
             Dados.geraComprovante(user)
 
@@ -143,8 +146,8 @@ class servicoExterno {
             var aux = true
 
             while (entrada.toInt() != 1) {
-                for (i in 0 until usuario.size) {
-                    if (entrada == usuario[i].id) {
+                for (i in 0 until socios.size) {
+                    if (entrada == socios[i].id) {
                         aux = false
                     }
                 }
@@ -157,10 +160,6 @@ class servicoExterno {
             }
 
             return entrada
-        }
-
-        fun alteraDados(){
-
         }
     }
 }

@@ -10,7 +10,8 @@ data class Socio(
     var emailSocio: String,
     var senha: String,
     var tipoSocio: DescricaoSocio,
-    val exemplaresEmprestados : MutableList<Livro> = ArrayList()
+    val exemplaresEmprestados : MutableList<Livro> = ArrayList(),
+    val exemplaresRenovados : MutableList<Livro> = ArrayList()
 )
 
 
